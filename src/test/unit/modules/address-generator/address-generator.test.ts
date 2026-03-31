@@ -21,8 +21,12 @@ describe('Namespace', () => {
     expect(() => Namespace.create('')).toThrow(InvalidNamespaceFormatError);
   });
 
-  it('rejects uppercase', () => {
-    expect(() => Namespace.create('Bitcoin')).toThrow(InvalidNamespaceFormatError);
+  it('normalizes to lowercase', () => {
+    expect(Namespace.create('Bitcoin').toString()).toBe('bitcoin');
+  });
+
+  it('rejects special characters', () => {
+    expect(() => Namespace.create('bit_coin!')).toThrow(InvalidNamespaceFormatError);
   });
 
   it('rejects too short', () => {
